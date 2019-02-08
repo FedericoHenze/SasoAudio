@@ -77,6 +77,8 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        let asset = AVURLAsset(url: recorder.url)
+        let a = asset.duration.timeString
         if !flag {
             finishRecording(success: false)
         }
@@ -86,5 +88,14 @@ class ViewController: UIViewController, AVAudioRecorderDelegate {
         self.present(activityVC, animated: true, completion: nil)
     }
     
+}
+
+extension CMTime {
+    var timeString: String {
+        let sInt = Int(seconds)
+        let s: Int = sInt % 60
+        let m: Int = (sInt / 60) % 60
+        return String(format: "%02d:%02d", m, s)
+    }
 }
 
